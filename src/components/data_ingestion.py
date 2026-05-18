@@ -6,6 +6,10 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass
 
+from src.components.data_transformation import DataTransformation # for accessing the configuration related to data transformation
+from src.components.data_transformation import DataTransformationConfig # for accessing the configuration related to data transformation
+
+
 @dataclass # This decorator is used to automatically generate special methods like __init__() and __repr__() for the class.
 class DataIngestionConfig: # This class is used to store the configuration for data ingestion. It has three attributes: train_data_path,
     # test_data_path, and raw_data_path.  
@@ -49,6 +53,12 @@ class DataIngestion: # This class is responsible for ingesting the data. It has 
 
 if __name__ == "__main__":
     obj = DataIngestion() # This line creates an instance of the DataIngestion class and assigns it to the variable obj.
-    obj.initiate_data_ingestion()# This block of code checks if the script is being run directly (as the main program) 
-    #and if so, it creates an instance of the DataIngestion class and calls the initiate_data_ingestion() #
+    train_data, test_data = obj.initiate_data_ingestion() # This line calls the initiate_data_ingestion() method on the obj instance, which performs the data ingestion process and returns the paths to the train and test data files. The returned paths are assigned to the variables train_data and test_data, respectively.
+    # This block of code checks if the script is being run directly (as the main program) 
+    #and if so, it creates an instance of the DataIngestion class and calls the initiate_data_ingestion() 
     # method to start the data ingestion process.
+
+    data_transformation = DataTransformation() # This line creates an instance of the DataTransformation class and assigns it to the
+    # variable data_transformation. This instance will be used to perform data transformation on the ingested data.
+    data_transformation.initiate_data_transformation(train_data, test_data) # This line calls the initiate_data_transformation() method on the data_transformation instance, passing the paths to the train and test data files as arguments. This will start the data transformation process on the ingested data.
+    
