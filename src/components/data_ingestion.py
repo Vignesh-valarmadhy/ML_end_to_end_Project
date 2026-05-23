@@ -8,7 +8,8 @@ from dataclasses import dataclass
 
 from src.components.data_transformation import DataTransformation # for accessing the configuration related to data transformation
 from src.components.data_transformation import DataTransformationConfig # for accessing the configuration related to data transformation
-
+from src.components.model_trainer import ModelTrainer # for accessing the configuration related to model training
+from src.components.model_trainer import ModelTrainerConfig # for accessing the configuration related to model training
 
 @dataclass # This decorator is used to automatically generate special methods like __init__() and __repr__() for the class.
 class DataIngestionConfig: # This class is used to store the configuration for data ingestion. It has three attributes: train_data_path,
@@ -60,5 +61,8 @@ if __name__ == "__main__":
 
     data_transformation = DataTransformation() # This line creates an instance of the DataTransformation class and assigns it to the
     # variable data_transformation. This instance will be used to perform data transformation on the ingested data.
-    data_transformation.initiate_data_transformation(train_data, test_data) # This line calls the initiate_data_transformation() method on the data_transformation instance, passing the paths to the train and test data files as arguments. This will start the data transformation process on the ingested data.
+    train_arr, test_arr, preprocessor_path = data_transformation.initiate_data_transformation(train_data, test_data) # This line calls the initiate_data_transformation() method on the data_transformation instance, passing the paths to the train and test data files as arguments. This will start the data transformation process on the ingested data.
+    ModelTrainer = ModelTrainer() # This line creates an instance of the ModelTrainer class and assigns
+    # it to the variable ModelTrainer. This instance will be used to train the machine learning model on the transformed data.
+    print(ModelTrainer.initiate_model_trainer(train_arr, test_arr, preprocessor_path)) # This line calls the initiate_model_trainer() method on the ModelTrainer instance, passing the transformed training and test data arrays as arguments. This will start the model training process using the transformed data.
     

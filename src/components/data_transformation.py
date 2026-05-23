@@ -101,7 +101,8 @@ class DataTransformation:
             test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)] # concatenating the transformed input features and target feature of the test data to get the final test array
 
             logging.info("Concatenating transformed input features and target feature completed") # logging the completion of concatenating transformed input features and target feature
-        
+            return (
+                train_arr, test_arr, self.data_transformation_config.preprocessor_obj_file_path) # returning the train array, test array and the path to save the preprocessor object
         except Exception as e:
             logging.info("Error in data transformation") # logging the error in data transformation
             raise CustomException(e, sys) # raising a custom exception with the error message and the system information
