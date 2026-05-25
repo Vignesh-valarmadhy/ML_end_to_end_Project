@@ -45,8 +45,38 @@ class ModelTrainer:
                 "CatBoosting Regressor": CatBoostRegressor(verbose=False),
                 "K-Neighbors Regressor": KNeighborsRegressor()
             }
+
+            params = { #hyperparameters for tuning the models
+                "Decision Tree": {
+                    'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
+                },
+                "Random Forest": { #hyperparameters for tuning the random forest model
+                    'n_estimators': [8,16,32,64,128,256] #number of trees in the random forest
+                },
+                "Gradient Boosting": { #hyperparameters for tuning the gradient boosting model
+                    'learning_rate':[.1,.01,.05,.001],#learning rate for the gradient boosting model
+                    'subsample':[0.6,0.7,0.75,0.8,0.85,0.9],#subsample for the gradient boosting model
+                    'n_estimators': [8,16,32,64,128,256] #number of trees in the gradient boosting model
+                },
+                "Linear Regression": {}, #no hyperparameters for tuning the linear regression model
+                "XGBRegressor": { #hyperparameters for tuning the xgboost model
+                    'learning_rate':[.1,.01,.05,.001], #learning rate for the xgboost model
+                    'n_estimators': [8,16,32,64,128,256]#number of trees in the xgboost model
+                },
+                "CatBoosting Regressor": { #hyperparameters for tuning the catboost model
+                    'depth': [6,8,10], #depth of the trees in the catboost model
+                    'learning_rate': [0.01, 0.05, 0.1], #learning rate for the catboost model
+                    'iterations': [30, 50, 100] #number of iterations for the catboost model
+                },
+                "K-Neighbors Regressor": { #hyperparameters for tuning the k-neighbors regressor model
+                    'n_neighbors': [5,7,9], #number of neighbors to use for the k-neighbors regressor model
+                    'weights': ['uniform', 'distance'] #weight function used in prediction for the k-neighbors regressor model
+                }
+            }
+
+
             model_report: dict = evaluate_models(
-                X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, models=models
+                X_train=X_train, y_train=y_train, X_test=X_test, y_test=y_test, models=models , params=params
             )
 
             ## to get the best model score from the dictionary
