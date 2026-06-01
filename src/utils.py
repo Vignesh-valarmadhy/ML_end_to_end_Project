@@ -44,4 +44,12 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, params):
 
     except Exception as e:
         raise CustomException(e, sys)
+    
+def load_object(file_path): # for loading the preprocessor object from the given path
+    try:
+        with open(file_path, 'rb') as file_obj: # opening the file in read binary mode to load the object
+            return dill.load(file_obj) # loading the object from the file using dill which is a library for serializing and deserializing Python objects
+    except Exception as e:
+        raise CustomException(e, sys) # raising a custom exception with the error message and the system information
+    
 
